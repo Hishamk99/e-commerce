@@ -1,4 +1,6 @@
 import 'package:e_commerce/constants.dart';
+import 'package:e_commerce/screens/signup_screen.dart';
+import 'package:e_commerce/widgets/custom_image_text.dart';
 import 'package:e_commerce/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
@@ -15,25 +17,10 @@ class LoginScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 30),
           child: ListView(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 50),
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height * .2,
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Image.asset('images/icons/buyicon.png'),
-                      const Positioned(
-                        bottom: 0,
-                        child: Text(
-                          'Buy it',
-                          style: TextStyle(fontFamily: 'Pacifico'),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
+              SizedBox(
+                height: height * .1,
               ),
+              const CustomImageText(),
               SizedBox(
                 height: height * .1,
               ),
@@ -51,26 +38,29 @@ class LoginScreen extends StatelessWidget {
               SizedBox(
                 height: height * .05,
               ),
-              Container(
-                margin: EdgeInsets.symmetric(
-                    horizontal: MediaQuery.of(context).size.width * .1),
-                height: 40,
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: const Center(
-                  child: Text(
-                    'Login',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
+              GestureDetector(
+                onTap: (){},
+                child: Container(
+                  margin: EdgeInsets.symmetric(
+                      horizontal: MediaQuery.of(context).size.width * .1),
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'Login',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                      ),
                     ),
                   ),
                 ),
               ),
               SizedBox(
-                height: height * .05,
+                height: height * .05
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -83,11 +73,14 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                   TextButton(
-                    onPressed: () {},
-                    child:  Text(
+                    onPressed: () {
+                      Navigator.pushNamed(context, SignUpScreen.id);
+                    },
+                    child: Text(
                       'SignUp',
                       style: TextStyle(
                         fontSize: MediaQuery.of(context).size.width * .04,
+                        color: Colors.black
                       ),
                     ),
                   ),

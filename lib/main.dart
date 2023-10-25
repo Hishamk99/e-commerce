@@ -1,4 +1,5 @@
 import 'package:e_commerce/screens/login_screen.dart';
+import 'package:e_commerce/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,6 +15,7 @@ class EcommerceApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: {
         LoginScreen.id :(context) => const LoginScreen(),
+        SignUpScreen.id :(context) => SignUpScreen(),
       },
       initialRoute: LoginScreen.id,
     );
