@@ -2,9 +2,10 @@ import 'package:e_commerce/constants.dart';
 import 'package:flutter/material.dart';
 
 class CustomextField extends StatelessWidget {
-  const CustomextField({super.key , required this.hint , required this.icon});
+  const CustomextField({super.key , required this.hint , required this.icon , @required this.onSaved});
   final String hint;
   final Icon icon;
+  final void Function(String?)? onSaved;
   String? errorMessage(String hint)
   {
     switch(hint)
@@ -18,6 +19,7 @@ class CustomextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onSaved: onSaved,
       validator: (value)
       {
         if(value == null)
@@ -26,6 +28,7 @@ class CustomextField extends StatelessWidget {
         }
         return null;
       },
+      obscureText: hint == 'Enter your Password' ? true : false,
       cursorColor: kMainColor,
       decoration: InputDecoration(
         hintText: hint,

@@ -1,5 +1,6 @@
 import 'package:e_commerce/constants.dart';
-import 'package:e_commerce/widgets/custom_image_text.dart';
+import 'package:e_commerce/services/auth.dart';
+import 'package:e_commerce/widgets/logo.dart';
 import 'package:e_commerce/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +8,8 @@ class SignUpScreen extends StatelessWidget {
   SignUpScreen({super.key});
   static String id = 'SignUp';
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  String? email , password;
+  final auth = Auth();
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -23,36 +26,52 @@ class SignUpScreen extends StatelessWidget {
                   height: height * .1,
                 ),
                 
-                const CustomImageText(),
+                const Logo(),
                 SizedBox(
                   height: height * .1,
                 ),
-                const CustomextField(
+                 CustomextField(
+                  onSaved: (value)
+                  {
+
+                  },
                   hint: 'Enter your Name',
-                  icon: Icon(Icons.person),
+                  icon:const Icon(Icons.person),
                 ),
                 SizedBox(
                   height: height * .02,
                 ),
-                const CustomextField(
+                CustomextField(
+                  onSaved: (value)
+                  {
+                    email = value;
+                  },
                   hint: 'Enter your Email',
-                  icon: Icon(Icons.email),
+                  icon: const Icon(Icons.email),
                 ),
                 SizedBox(
                   height: height * .02,
                 ),
-                const CustomextField(
+                 CustomextField(
+                  onSaved: (value)
+                  {
+                    password = value;
+                  },
                   hint: 'Enter your Password',
-                  icon: Icon(Icons.lock),
+                  icon: const Icon(Icons.lock),
                 ),
                 SizedBox(
                   height: height * .05,
                 ),
                 GestureDetector(
-                  onTap: () {
+                  onTap: ()async {
                     if(formKey.currentState!.validate())
                     {
-                      
+                      formKey.currentState!.save();
+                      debugPrint(email);
+                      debugPrint(password);
+                      final res = await auth.signUp(email!, password!);
+                      debugPrint(res.user!.email);
                     }
                   },
                   child: Container(
@@ -89,7 +108,7 @@ class SignUpScreen extends StatelessWidget {
                     ),
                     TextButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, SignUpScreen.id);
+                        //Navigator.pushNamed(context, SignUpScreen.id);
                       },
                       child: Text(
                         'Sign in',
