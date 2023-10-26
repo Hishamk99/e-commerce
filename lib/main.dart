@@ -2,6 +2,8 @@ import 'package:e_commerce/screens/login_screen.dart';
 import 'package:e_commerce/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
+import 'provider/admin_mode.dart';
 
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,13 +16,16 @@ class EcommerceApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      routes: {
-        LoginScreen.id :(context) =>  LoginScreen(),
-        SignUpScreen.id :(context) => SignUpScreen(),
-      },
-      initialRoute: LoginScreen.id,
+    return ChangeNotifierProvider<AdminMode>(
+      create: (context)=>AdminMode(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        routes: {
+          LoginScreen.id :(context) =>  const LoginScreen(),
+          SignUpScreen.id :(context) => const SignUpScreen(),
+        },
+        initialRoute: LoginScreen.id,
+      ),
     );
   }
 }

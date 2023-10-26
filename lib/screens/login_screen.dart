@@ -1,5 +1,6 @@
 import 'package:e_commerce/constants.dart';
 import 'package:e_commerce/helper/show_snack_bar.dart';
+import 'package:e_commerce/provider/admin_mode.dart';
 import 'package:e_commerce/screens/signup_screen.dart';
 import 'package:e_commerce/services/auth.dart';
 import 'package:e_commerce/widgets/logo.dart';
@@ -7,6 +8,7 @@ import 'package:e_commerce/widgets/custom_text_form_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -22,6 +24,8 @@ class _LoginScreenState extends State<LoginScreen> {
   String? email, password;
   final auth = Auth();
   bool isLoading = false;
+  bool isAdmin = false;
+  final adminPass = 'admin12345';
 
   @override
   Widget build(BuildContext context) {
@@ -65,29 +69,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: height * .05,
                   ),
                   GestureDetector(
-                    onTap: () async {
-                      if (formKey.currentState!.validate()) {
-                        isLoading = true;
-                        setState(() {});
-                        try {
-                          formKey.currentState!.save();
-                          debugPrint(email);
-                          debugPrint(password);
-                          final res = await auth.signIn(email!, password!);
-                          debugPrint(res.user!.email);
-                          showSnackBar(context, 'success');
-                        } on FirebaseAuthException catch (e) {
-                          if (e.code == 'user-not-found') {
-                            showSnackBar(
-                                context, 'no user found for tha email');
-                          } else if (e.code == 'wrong-password') {
-                            showSnackBar(context,
-                                'wrong password provided for that user');
-                          }
-                        }
-                        isLoading = false;
-                        setState(() {});
-                      } else {}
+                    onTap: () {
+                      _validate(context);
                     },
                     child: Container(
                       margin: EdgeInsets.symmetric(
@@ -132,6 +115,54 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ],
                   ),
+                  SizedBox(
+                    height: height * .03,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              Provider.of<AdminMode>(context, listen: false)
+                                  .changeIsAdmin(true);
+                            },
+                            child: Text(
+                              'I\'m an admin',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: Provider.of<AdminMode>(context).isAdmin
+                                    ? kMainColor
+                                    : Colors.white,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              Provider.of<AdminMode>(context, listen: false)
+                                  .changeIsAdmin(false);
+                            },
+                            child: Text(
+                              'I\'m a user',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Provider.of<AdminMode>(context).isAdmin
+                                    ? Colors.white
+                                    : kMainColor
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -139,5 +170,51 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _validate(BuildContext context) async {
+    isLoading = true;
+    setState(() {});
+    if (formKey.currentState!.validate()) {
+      formKey.currentState!.save();
+      if (Provider.of<AdminMode>(context , listen: false).isAdmin) {
+        if (password == adminPass) {
+          try {
+          debugPrint(email);
+          debugPrint(password);
+          await auth.signIn(email!, password!);
+          showSnackBar(context, 'hello');
+        } on FirebaseAuthException catch (e) {
+          if (e.code == 'user-not-found') {
+            showSnackBar(context, 'no user found for tha email');
+          } else if (e.code == 'wrong-password') {
+            showSnackBar(context, 'wrong password provided for that user');
+          }
+        } catch (e) {
+          print(e.toString());
+        }
+        } else {
+          showSnackBar(context, 'something went wrong');
+        }
+      } else {
+        try {
+          print(isAdmin);
+          debugPrint(email);
+          debugPrint(password);
+          await auth.signIn(email!, password!);
+          showSnackBar(context, 'success');
+        } on FirebaseAuthException catch (e) {
+          if (e.code == 'user-not-found') {
+            showSnackBar(context, 'no user found for tha email');
+          } else if (e.code == 'wrong-password') {
+            showSnackBar(context, 'wrong password provided for that user');
+          }
+        } catch (e) {
+          print(e.toString());
+        }
+      }
+    }
+    isLoading = false;
+    setState(() {});
   }
 }

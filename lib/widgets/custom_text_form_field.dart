@@ -22,7 +22,7 @@ class CustomextField extends StatelessWidget {
       onSaved: onSaved,
       validator: (value)
       {
-        if(value == null)
+        if(value!.isEmpty)
         {
           return errorMessage(hint);
         }

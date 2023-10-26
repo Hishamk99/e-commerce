@@ -80,8 +80,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         setState(() {});
                         try {
                           formKey.currentState!.save();
-                          debugPrint(email);
-                          debugPrint(password);
+                           debugPrint(email);
+                           debugPrint(password);
                           final res = await auth.signUp(email!, password!);
                           debugPrint(res.user!.email);
                           showSnackBar(context, 'success');
