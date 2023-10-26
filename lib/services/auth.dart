@@ -8,7 +8,7 @@ class Auth {
     return authResult;    
   }
 
-  Future<UserCredential> signIp(String email, String password) async {
+  Future<UserCredential> signIn(String email, String password) async {
     final authResult = await _auth.signInWithEmailAndPassword(
         email: email, password: password);
     return authResult;    
