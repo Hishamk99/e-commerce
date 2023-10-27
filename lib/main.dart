@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'provider/admin_mode.dart';
+import 'screens/add_product.dart';
+import 'screens/admin_screen.dart';
+import 'screens/edit_product.dart';
 
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,6 +26,9 @@ class EcommerceApp extends StatelessWidget {
         routes: {
           LoginScreen.id :(context) =>  const LoginScreen(),
           SignUpScreen.id :(context) => const SignUpScreen(),
+          AdminScreen.id :(context) => const AdminScreen(),
+          AddProduct.id :(context) => AddProduct(),
+          EditProduct.id :(context) => const EditProduct(),
         },
         initialRoute: LoginScreen.id,
       ),

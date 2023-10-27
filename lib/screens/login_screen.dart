@@ -1,6 +1,7 @@
 import 'package:e_commerce/constants.dart';
 import 'package:e_commerce/helper/show_snack_bar.dart';
 import 'package:e_commerce/provider/admin_mode.dart';
+import 'package:e_commerce/screens/admin_screen.dart';
 import 'package:e_commerce/screens/signup_screen.dart';
 import 'package:e_commerce/services/auth.dart';
 import 'package:e_commerce/widgets/logo.dart';
@@ -48,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: height * .1,
                   ),
-                  CustomextField(
+                  CustomTextField(
                     onSaved: (data) {
                       email = data;
                     },
@@ -58,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: height * .02,
                   ),
-                  CustomextField(
+                  CustomTextField(
                     onSaved: (data) {
                       password = data;
                     },
@@ -180,10 +181,8 @@ class _LoginScreenState extends State<LoginScreen> {
       if (Provider.of<AdminMode>(context , listen: false).isAdmin) {
         if (password == adminPass) {
           try {
-          debugPrint(email);
-          debugPrint(password);
           await auth.signIn(email!, password!);
-          showSnackBar(context, 'hello');
+          Navigator.pushNamed(context, AdminScreen.id);
         } on FirebaseAuthException catch (e) {
           if (e.code == 'user-not-found') {
             showSnackBar(context, 'no user found for tha email');
@@ -191,7 +190,7 @@ class _LoginScreenState extends State<LoginScreen> {
             showSnackBar(context, 'wrong password provided for that user');
           }
         } catch (e) {
-          print(e.toString());
+          debugPrint(e.toString());
         }
         } else {
           showSnackBar(context, 'something went wrong');
@@ -209,8 +208,7 @@ class _LoginScreenState extends State<LoginScreen> {
           } else if (e.code == 'wrong-password') {
             showSnackBar(context, 'wrong password provided for that user');
           }
-        } catch (e) {
-          print(e.toString());
+          else{showSnackBar(context, 'error');}
         }
       }
     }

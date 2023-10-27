@@ -1,10 +1,10 @@
 import 'package:e_commerce/constants.dart';
 import 'package:flutter/material.dart';
 
-class CustomextField extends StatelessWidget {
-  const CustomextField({super.key , required this.hint , required this.icon , @required this.onSaved});
+class CustomTextField extends StatelessWidget {
+  const CustomTextField({super.key , required this.hint , this.icon , @required this.onSaved});
   final String hint;
-  final Icon icon;
+  final Icon? icon;
   final void Function(String?)? onSaved;
   String? errorMessage(String hint)
   {
@@ -13,6 +13,11 @@ class CustomextField extends StatelessWidget {
       case 'Enter Your Name' : return 'Name is empty!!'; 
       case 'Enter your Password' : return 'Password is empty!!'; 
       case 'Enter your Email' : return 'Email is empty!!'; 
+      case 'Product Name' : return 'Name is empty!!'; 
+      case 'Product Price' : return 'Price is empty!!'; 
+      case 'Product Description' : return 'Description is empty!!'; 
+      case 'Product Category' : return 'Category is empty!!'; 
+      case 'Product Location' : return 'Location is empty!!'; 
       default: return '';
     }
   }

@@ -1,5 +1,6 @@
 import 'package:e_commerce/constants.dart';
 import 'package:e_commerce/helper/show_snack_bar.dart';
+import 'package:e_commerce/screens/login_screen.dart';
 import 'package:e_commerce/services/auth.dart';
 import 'package:e_commerce/widgets/logo.dart';
 import 'package:e_commerce/widgets/custom_text_form_field.dart';
@@ -45,7 +46,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   SizedBox(
                     height: height * .1,
                   ),
-                  CustomextField(
+                  CustomTextField(
                     onSaved: (value) {},
                     hint: 'Enter your Name',
                     icon: const Icon(Icons.person),
@@ -53,7 +54,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   SizedBox(
                     height: height * .02,
                   ),
-                  CustomextField(
+                  CustomTextField(
                     onSaved: (value) {
                       email = value;
                     },
@@ -63,7 +64,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   SizedBox(
                     height: height * .02,
                   ),
-                  CustomextField(
+                  CustomTextField(
                     onSaved: (value) {
                       password = value;
                     },
@@ -128,7 +129,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       TextButton(
                         onPressed: () {
-                          //Navigator.pushNamed(context, SignUpScreen.id);
+                          Navigator.pop(context);
                         },
                         child: Text(
                           'Sign in',
