@@ -17,12 +17,8 @@ class AddProduct extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Form(
             key: formKey,
-            child:
-                ListView(
-                  
-                  
-                 children: [
-                  SizedBox(height: MediaQuery.of(context).size.height * .17),
+            child: ListView(children: [
+              SizedBox(height: MediaQuery.of(context).size.height * .17),
               CustomTextField(
                   hint: 'Product Name',
                   onSaved: (value) {

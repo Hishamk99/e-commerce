@@ -14,20 +14,22 @@ class Store {
       kProductLocation: product.location
     });
   }
-  Future<List<ProductModel>> loadProduct() async
-  {
-    var snapshot = await FirebaseFirestore.instance.collection(kProductCollection).get();
-    List<ProductModel> products = [];
-    for (var doc in snapshot.docs) {
-      var data = doc.data();
-      products.add(ProductModel(
-        price : data[kProductPrice],
-        name: data[kProductName],
-        category: data[kProductCategory],
-        location: data[kProductCategory],
-        desc: data[kProductDecsription],
-      ),);
-    }
-    return products;
-  }
+   Stream<QuerySnapshot> loadProduct() 
+   {
+    return FirebaseFirestore.instance.collection(kProductCollection).snapshots();
+   }
+  // {
+  //   var product =  FirebaseFirestore.instance.collection(kProductCollection).get();
+  //   List<ProductModel> products = [];
+  //   for (var doc in product.docs) {
+  //     var data = doc.data();
+  //     products.add(ProductModel(
+  //       price : data[kProductPrice],
+  //       name: data[kProductName],
+  //       category: data[kProductCategory],
+  //       location: data[kProductCategory],
+  //       desc: data[kProductDecsription],
+  //     ),);
+  //   }
+  // }
 }
