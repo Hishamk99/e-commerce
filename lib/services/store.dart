@@ -3,10 +3,11 @@ import 'package:e_commerce/constants.dart';
 import 'package:e_commerce/models/product_model.dart';
 
 class Store {
-  final FirebaseFirestore fireStore = FirebaseFirestore.instance;
+  //final FirebaseFirestore fireStore = FirebaseFirestore.instance;
+  final doc = FirebaseFirestore.instance.collection(kProductCollection);
 
   addProduct(ProductModel product) {
-    fireStore.collection(kProductCollection).add({
+    doc.add({
       kProductName: product.name,
       kProductPrice: product.price,
       kProductDecsription: product.desc,
@@ -17,7 +18,12 @@ class Store {
 
   deleteProduct(docId)
   {
-    fireStore.collection(kProductCollection).doc(docId).delete();
+    doc.doc(docId).delete();
+  }
+
+  editProduct(data , docId)
+  {
+    doc.doc(docId).update(data);
   }
 
   // Stream<QuerySnapshot> loadProduct() {

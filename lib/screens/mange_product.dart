@@ -64,10 +64,8 @@ class _ManageProductsState extends State<ManageProducts> {
                                 onTap: () async {
                                   final navigator = Navigator.of(context);
                                   await Future.delayed(Duration.zero);
-                                  navigator.push(
-                                    MaterialPageRoute(
-                                        builder: (context) => EditProducts()),
-                                  );
+                                  navigator.pushNamed(EditProducts.id,
+                                      arguments: productList[index]);
                                 },
                                 child: const Text('Edit'),
                               ),
