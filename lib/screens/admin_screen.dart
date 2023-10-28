@@ -1,6 +1,6 @@
 import 'package:e_commerce/constants.dart';
 import 'package:e_commerce/screens/add_product.dart';
-import 'package:e_commerce/screens/edit_product.dart';
+import 'package:e_commerce/screens/mange_product.dart';
 import 'package:flutter/material.dart';
 
 class AdminScreen extends StatelessWidget {
@@ -39,7 +39,7 @@ class AdminScreen extends StatelessWidget {
             const SizedBox(height: 15,),
             GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, EditProduct.id);
+                Navigator.pushNamed(context, ManageProducts.id);
               },
               child: Container(
                 width: 120,

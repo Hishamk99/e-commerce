@@ -1,18 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce/constants.dart';
 import 'package:e_commerce/models/product_model.dart';
+import 'package:e_commerce/screens/edit_products.dart';
 import 'package:e_commerce/services/store.dart';
 import 'package:flutter/material.dart';
 
-class EditProduct extends StatefulWidget {
-  const EditProduct({super.key});
-  static String id = 'EditProduct';
+class ManageProducts extends StatefulWidget {
+  const ManageProducts({super.key});
+  static String id = 'ManageProducts';
 
   @override
-  State<EditProduct> createState() => _EditProductState();
+  State<ManageProducts> createState() => _ManageProductsState();
 }
 
-class _EditProductState extends State<EditProduct> {
+class _ManageProductsState extends State<ManageProducts> {
   Store store = Store();
   CollectionReference products =
       FirebaseFirestore.instance.collection(kProductCollection);
@@ -27,7 +28,7 @@ class _EditProductState extends State<EditProduct> {
             var data = snapshot.data!.docs[i];
             productList.add(
               ProductModel(
-                id:  data.id,
+                id: data.id,
                 price: data[kProductPrice] ?? '',
                 name: data[kProductName] ?? '',
                 category: data[kProductCategory] ?? '',
@@ -49,25 +50,29 @@ class _EditProductState extends State<EditProduct> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 10, vertical: 10),
                     child: GestureDetector(
-                      onTapUp: (details) {
+                      behavior: HitTestBehavior.translucent,
+                      onTapUp: (details) async {
                         double dx = details.globalPosition.dx;
                         double dy = details.globalPosition.dy;
                         double dx1 = MediaQuery.of(context).size.width - dx;
                         double dy1 = MediaQuery.of(context).size.width - dy;
-                        showMenu(
+                        await showMenu(
                             context: context,
                             position: RelativeRect.fromLTRB(dx, dy, dx1, dy1),
                             items: [
                               PopupMenuItem(
-                                value: 1,
-                                onTap: (){
-                                  Navigator.pop(context);
+                                onTap: () async {
+                                  final navigator = Navigator.of(context);
+                                  await Future.delayed(Duration.zero);
+                                  navigator.push(
+                                    MaterialPageRoute(
+                                        builder: (context) => EditProducts()),
+                                  );
                                 },
-                                child: const Text('Exit'),
+                                child: const Text('Edit'),
                               ),
-                               PopupMenuItem(
-                                value: 2,
-                                onTap: (){
+                              PopupMenuItem(
+                                onTap: () {
                                   store.deleteProduct(productList[index].id);
                                 },
                                 child: const Text('Delete'),
