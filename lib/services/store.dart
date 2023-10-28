@@ -14,22 +14,10 @@ class Store {
       kProductLocation: product.location
     });
   }
-   Stream<QuerySnapshot> loadProduct() 
-   {
-    return FirebaseFirestore.instance.collection(kProductCollection).snapshots();
-   }
-  // {
-  //   var product =  FirebaseFirestore.instance.collection(kProductCollection).get();
-  //   List<ProductModel> products = [];
-  //   for (var doc in product.docs) {
-  //     var data = doc.data();
-  //     products.add(ProductModel(
-  //       price : data[kProductPrice],
-  //       name: data[kProductName],
-  //       category: data[kProductCategory],
-  //       location: data[kProductCategory],
-  //       desc: data[kProductDecsription],
-  //     ),);
-  //   }
+
+  // Stream<QuerySnapshot> loadProduct() {
+  //   return FirebaseFirestore.instance
+  //       .collection(kProductCollection)
+  //       .snapshots();
   // }
 }

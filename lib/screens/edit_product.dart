@@ -28,19 +28,79 @@ class _EditProductState extends State<EditProduct> {
             productList.add(
               ProductModel(
                 price: data[kProductPrice] ?? '',
-                name: data[kProductName]??'',
-                category: data[kProductCategory]?? '',
-                location: data[kProductCategory]?? '',
-                desc: data[kProductDecsription]?? '',
+                name: data[kProductName] ?? '',
+                category: data[kProductCategory] ?? '',
+                location: data[kProductLocation] ?? '',
+                desc: data[kProductDecsription] ?? '',
               ),
             );
           }
           return SafeArea(
             child: Scaffold(
-              body: ListView.builder(
+              body: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2, childAspectRatio: .9),
                 itemCount: productList.length,
                 itemBuilder: (context, index) {
-                  return Text(productList[index].name);
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 10),
+                    child: GestureDetector(
+                      onTapUp: (details) {
+                        double dx = details.globalPosition.dx;
+                        double dy = details.globalPosition.dy;
+                        double dx1 = MediaQuery.of(context).size.width - dx;
+                        double dy1 = MediaQuery.of(context).size.width - dy;
+                        showMenu(context: context,
+                          position: RelativeRect.fromLTRB(dx, dy, dx1, dy1),
+                          items: [
+                            const PopupMenuItem(child:  Text('Exit'),),
+                            const PopupMenuItem(child:  Text('Delete'),),
+                          ]);
+                      },
+                      child: Stack(
+                        children: [
+                          Positioned.fill(
+                            child: Image.asset(
+                              productList[index].location,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            child: Opacity(
+                              opacity: .6,
+                              child: Container(
+                                height: 60,
+                                width: MediaQuery.of(context).size.width,
+                                color: Colors.white,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 10 ,vertical: 8.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        productList[index].name,
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Text(
+                                        '\$ ${productList[index].price}',
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
                 },
               ),
             ),
@@ -48,7 +108,7 @@ class _EditProductState extends State<EditProduct> {
         } else {
           return const SafeArea(
             child: Scaffold(
-              body:  Text('Loading...'),
+              body: Text('Loading...'),
             ),
           );
         }
