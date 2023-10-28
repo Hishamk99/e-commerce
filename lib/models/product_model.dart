@@ -4,9 +4,10 @@ class ProductModel {
   final String desc;
   final String location;
   final String category;
+  final String? id;
 
-  ProductModel(
-      {required this.name,
+  ProductModel({this.id,
+      required this.name,
       required this.price,
       required this.desc,
       required this.location,

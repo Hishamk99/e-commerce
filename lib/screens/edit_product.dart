@@ -27,6 +27,7 @@ class _EditProductState extends State<EditProduct> {
             var data = snapshot.data!.docs[i];
             productList.add(
               ProductModel(
+                id:  data.id,
                 price: data[kProductPrice] ?? '',
                 name: data[kProductName] ?? '',
                 category: data[kProductCategory] ?? '',
@@ -39,7 +40,9 @@ class _EditProductState extends State<EditProduct> {
             child: Scaffold(
               body: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, childAspectRatio: .9),
+                  crossAxisCount: 2,
+                  childAspectRatio: .9,
+                ),
                 itemCount: productList.length,
                 itemBuilder: (context, index) {
                   return Padding(
@@ -51,12 +54,25 @@ class _EditProductState extends State<EditProduct> {
                         double dy = details.globalPosition.dy;
                         double dx1 = MediaQuery.of(context).size.width - dx;
                         double dy1 = MediaQuery.of(context).size.width - dy;
-                        showMenu(context: context,
-                          position: RelativeRect.fromLTRB(dx, dy, dx1, dy1),
-                          items: [
-                            const PopupMenuItem(child:  Text('Exit'),),
-                            const PopupMenuItem(child:  Text('Delete'),),
-                          ]);
+                        showMenu(
+                            context: context,
+                            position: RelativeRect.fromLTRB(dx, dy, dx1, dy1),
+                            items: [
+                              PopupMenuItem(
+                                value: 1,
+                                onTap: (){
+                                  Navigator.pop(context);
+                                },
+                                child: const Text('Exit'),
+                              ),
+                               PopupMenuItem(
+                                value: 2,
+                                onTap: (){
+                                  store.deleteProduct(productList[index].id);
+                                },
+                                child: const Text('Delete'),
+                              ),
+                            ]);
                       },
                       child: Stack(
                         children: [
@@ -75,9 +91,11 @@ class _EditProductState extends State<EditProduct> {
                                 width: MediaQuery.of(context).size.width,
                                 color: Colors.white,
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 10 ,vertical: 8.0),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 8.0),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         productList[index].name,
@@ -116,3 +134,23 @@ class _EditProductState extends State<EditProduct> {
     );
   }
 }
+
+// class MyPopupMenuItem<T> extends PopupMenuItem<T> {
+//   const MyPopupMenuItem({Widget? child,required this.onClick}) :super(child: child);
+//   final Function onClick;
+
+//   @override
+//   PopupMenuItemState<T, PopupMenuItem<T>> createState() => MyPopupMenuItemState();
+// }
+
+// class MyPopupMenuItemState<T, PopupMenuItem>
+//     extends PopupMenuItemState<T, MyPopupMenuItem<T>> {
+//   @override
+//   void handleTap() {
+//     widget.onClick;
+//     print('heloo jdjd');
+//     super.handleTap();
+    
+//     Navigator.pop(context);
+//   }
+// }
