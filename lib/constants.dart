@@ -8,3 +8,4 @@ const kProductPrice = 'productPrice';
 const kProductLocation = 'productLocation';
 const kProductCategory = 'productCategory';
 const kProductDecsription = 'productDecsription';
+const kUnActiveColor = Color(0xffc1bdb8);

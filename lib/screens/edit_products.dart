@@ -4,11 +4,19 @@ import 'package:e_commerce/services/store.dart';
 import 'package:e_commerce/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 
-class EditProducts extends StatelessWidget {
-  EditProducts({super.key});
+class EditProducts extends StatefulWidget {
+  const EditProducts({super.key});
   static String id = 'EditProducts';
+
+  @override
+  State<EditProducts> createState() => _EditProductsState();
+}
+
+class _EditProductsState extends State<EditProducts> {
   String? name, price, decs, category, location;
+
   final store = Store();
+
   GlobalKey<FormState> formKey = GlobalKey();
 
   @override

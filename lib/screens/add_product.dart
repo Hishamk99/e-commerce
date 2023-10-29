@@ -3,12 +3,21 @@ import 'package:e_commerce/services/store.dart';
 import 'package:e_commerce/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 
-class AddProduct extends StatelessWidget {
-  AddProduct({super.key});
+class AddProduct extends StatefulWidget {
+  const AddProduct({super.key});
   static String id = 'AddProduct';
+
+  @override
+  State<AddProduct> createState() => _AddProductState();
+}
+
+class _AddProductState extends State<AddProduct> {
   String? name, price, decs, category, location;
+
   final GlobalKey<FormState> formKey = GlobalKey();
+
   final store = Store();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(

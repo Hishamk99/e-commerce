@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'provider/admin_mode.dart';
 import 'screens/add_product.dart';
 import 'screens/admin_screen.dart';
+import 'screens/home_screen.dart';
 import 'screens/mange_product.dart';
 
 void main()async {
@@ -28,11 +29,12 @@ class EcommerceApp extends StatelessWidget {
           LoginScreen.id :(context) =>  const LoginScreen(),
           SignUpScreen.id :(context) => const SignUpScreen(),
           AdminScreen.id :(context) => const AdminScreen(),
-          AddProduct.id :(context) => AddProduct(),
+          AddProduct.id :(context) => const AddProduct(),
           ManageProducts.id :(context) => const ManageProducts(),
-          EditProducts.id :(context) => EditProducts(),
+          EditProducts.id :(context) => const EditProducts(),
+          HomeScreen.id :(context) => const HomeScreen(),
         },
-        initialRoute: LoginScreen.id,
+        initialRoute: HomeScreen.id,
       ),
     );
   }

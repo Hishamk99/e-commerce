@@ -10,6 +10,9 @@ class AdminScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Admin Screen'),
+        ),
         backgroundColor: kMainColor,
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,

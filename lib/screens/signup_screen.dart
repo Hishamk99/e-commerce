@@ -1,6 +1,5 @@
 import 'package:e_commerce/constants.dart';
 import 'package:e_commerce/helper/show_snack_bar.dart';
-import 'package:e_commerce/screens/login_screen.dart';
 import 'package:e_commerce/services/auth.dart';
 import 'package:e_commerce/widgets/logo.dart';
 import 'package:e_commerce/widgets/custom_text_form_field.dart';
