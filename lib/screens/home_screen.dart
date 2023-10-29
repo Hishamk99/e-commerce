@@ -15,6 +15,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final auth = Auth();
   int tapBarIndex = 0;
+  int bottomBarIndex = 0;
   @override
   void initState() {
     super.initState();
@@ -27,6 +28,35 @@ class _HomeScreenState extends State<HomeScreen> {
         DefaultTabController(
           length: 4,
           child: Scaffold(
+            bottomNavigationBar: BottomNavigationBar(
+              currentIndex: bottomBarIndex,
+              fixedColor: kMainColor,
+              type: BottomNavigationBarType.fixed,
+              onTap: (value) {
+                setState(() {
+                  bottomBarIndex = value;
+                });
+              },
+              items: const [
+                BottomNavigationBarItem(
+                  //backgroundColor:kMainColor,
+                  label: 'dsds',
+                  icon: Icon(Icons.person),
+                ),
+                BottomNavigationBarItem(
+                  label: 'dsds',
+                  icon: Icon(Icons.person),
+                ),
+                BottomNavigationBarItem(
+                  label: 'dsds',
+                  icon: Icon(Icons.person),
+                ),
+                BottomNavigationBarItem(
+                  label: 'dsds',
+                  icon: Icon(Icons.person),
+                ),
+              ],
+            ),
             appBar: AppBar(
               backgroundColor: Colors.white,
               elevation: 0,
@@ -183,7 +213,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           );
         } else {
-          return const Text('Loading'); 
+          return const Text('Loading');
         }
       },
     );

@@ -181,7 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (Provider.of<AdminMode>(context , listen: false).isAdmin) {
         if (password == adminPass) {
           try {
-          await auth.signIn(email!, password!);
+          await auth.signIn(email!.trim(), password!.trim());
           Navigator.pushNamed(context, AdminScreen.id);
         } on FirebaseAuthException catch (e) {
           if (e.code == 'user-not-found') {

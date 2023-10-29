@@ -82,7 +82,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           formKey.currentState!.save();
                            debugPrint(email);
                            debugPrint(password);
-                          final res = await auth.signUp(email!, password!);
+                          final res = await auth.signUp(email!.trim(), password!.trim());
                           debugPrint(res.user!.email);
                           showSnackBar(context, 'success');
                         } on FirebaseAuthException catch (e) {
