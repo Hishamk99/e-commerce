@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce/constants.dart';
 import 'package:e_commerce/models/product_model.dart';
 import 'package:e_commerce/screens/edit_products.dart';
+import 'package:e_commerce/screens/home_screen.dart';
 import 'package:e_commerce/services/store.dart';
 import 'package:flutter/material.dart';
 
@@ -77,48 +78,54 @@ class _ManageProductsState extends State<ManageProducts> {
                               ),
                             ]);
                       },
-                      child: Stack(
-                        children: [
-                          Positioned.fill(
-                            child: Image.asset(
-                              productList[index].location,
-                              fit: BoxFit.fill,
+                      child: GestureDetector(
+                        onTap: ()
+                        {
+                          Navigator.pushNamed(context, HomeScreen.id);
+                        },
+                        child: Stack(
+                          children: [
+                            Positioned.fill(
+                              child: Image.asset(
+                                productList[index].location,
+                                fit: BoxFit.fill,
+                              ),
                             ),
-                          ),
-                          Positioned(
-                            bottom: 0,
-                            child: Opacity(
-                              opacity: .6,
-                              child: Container(
-                                height: 60,
-                                width: MediaQuery.of(context).size.width,
-                                color: Colors.white,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 8.0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        productList[index].name,
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
+                            Positioned(
+                              bottom: 0,
+                              child: Opacity(
+                                opacity: .6,
+                                child: Container(
+                                  height: 60,
+                                  width: MediaQuery.of(context).size.width,
+                                  color: Colors.white,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 8.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          productList[index].name,
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
-                                      ),
-                                      Text(
-                                        '\$ ${productList[index].price}',
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
+                                        Text(
+                                          '\$ ${productList[index].price}',
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   );
