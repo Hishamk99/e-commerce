@@ -5,8 +5,11 @@ class ProductModel {
   final String location;
   final String category;
   final String? id;
+  int? kQuantity;
 
-  ProductModel({this.id,
+  ProductModel(
+      {this.kQuantity,
+      this.id,
       required this.name,
       required this.price,
       required this.desc,

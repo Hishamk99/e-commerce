@@ -1,6 +1,9 @@
 import 'package:e_commerce/constants.dart';
+import 'package:e_commerce/helper/show_snack_bar.dart';
 import 'package:e_commerce/models/product_model.dart';
+import 'package:e_commerce/provider/cart_item.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProductInfoPage extends StatefulWidget {
   const ProductInfoPage({super.key});
@@ -11,7 +14,7 @@ class ProductInfoPage extends StatefulWidget {
 }
 
 class _ProductInfoState extends State<ProductInfoPage> {
-  int quantity = 0;
+  int quantity = 1;
   @override
   Widget build(BuildContext context) {
     ProductModel product =
@@ -82,9 +85,6 @@ class _ProductInfoState extends State<ProductInfoPage> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          // const SizedBox(
-                          //   height: 10,
-                          // ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -101,7 +101,10 @@ class _ProductInfoState extends State<ProductInfoPage> {
                                   ),
                                 ),
                               ),
-                              Text(quantity.toString() , style:const TextStyle(fontSize: 60),),
+                              Text(
+                                quantity.toString(),
+                                style: const TextStyle(fontSize: 60),
+                              ),
                               ClipOval(
                                 child: Material(
                                   color: kMainColor,
@@ -122,24 +125,28 @@ class _ProductInfoState extends State<ProductInfoPage> {
                     ),
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * .1,
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20),
+                Builder(
+                  builder: (context) => GestureDetector(
+                    onTap: () {
+                      addToCart(context, product);
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * .1,
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
+                        ),
+                        color: kMainColor,
                       ),
-                      color: kMainColor,
-                    ),
-                    child: const Center(
-                      child: Text(
-                        'ADD TO CART',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
+                      child: const Center(
+                        child: Text(
+                          'ADD TO CART',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
@@ -153,10 +160,17 @@ class _ProductInfoState extends State<ProductInfoPage> {
     );
   }
 
+  void addToCart(BuildContext context, ProductModel product) {
+    CartItem cartItem =
+        Provider.of<CartItem>(context, listen: false);
+    product.kQuantity = quantity;
+    cartItem.addProduct(product);
+    showSnackBar(context, 'Added to Cart');
+  }
+
   void subtract() {
     setState(() {
-      if(quantity > 0)
-      {
+      if (quantity > 1) {
         quantity--;
       }
     });
