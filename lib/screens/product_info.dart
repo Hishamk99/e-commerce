@@ -2,6 +2,7 @@ import 'package:e_commerce/constants.dart';
 import 'package:e_commerce/helper/show_snack_bar.dart';
 import 'package:e_commerce/models/product_model.dart';
 import 'package:e_commerce/provider/cart_item.dart';
+import 'package:e_commerce/screens/cart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -34,11 +35,23 @@ class _ProductInfoState extends State<ProductInfoPage> {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             child: SizedBox(
               height: MediaQuery.of(context).size.height * .1,
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Icon(Icons.arrow_back_ios),
-                  Icon(Icons.shopping_cart),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Icon(
+                      Icons.arrow_back_ios,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, CartScreen.id);
+                    },
+                    child: const Icon(Icons.shopping_cart),
+                  ),
                 ],
               ),
             ),
@@ -161,8 +174,7 @@ class _ProductInfoState extends State<ProductInfoPage> {
   }
 
   void addToCart(BuildContext context, ProductModel product) {
-    CartItem cartItem =
-        Provider.of<CartItem>(context, listen: false);
+    CartItem cartItem = Provider.of<CartItem>(context, listen: false);
     product.kQuantity = quantity;
     cartItem.addProduct(product);
     showSnackBar(context, 'Added to Cart');

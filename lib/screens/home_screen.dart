@@ -1,5 +1,6 @@
 import 'package:e_commerce/constants.dart';
 import 'package:e_commerce/models/product_model.dart';
+import 'package:e_commerce/screens/cart_screen.dart';
 import 'package:e_commerce/services/auth.dart';
 import 'package:e_commerce/widgets/product_view.dart';
 import 'package:flutter/material.dart';
@@ -115,17 +116,21 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             child: SizedBox(
               height: MediaQuery.of(context).size.height * .1,
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     'DISCOVER',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
                     ),
                   ),
-                  Icon(Icons.shopping_cart),
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, CartScreen.id);
+                      },
+                      child: const Icon(Icons.shopping_cart)),
                 ],
               ),
             ),
