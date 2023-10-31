@@ -26,6 +26,20 @@ class Store {
     docoment.doc(docId).update(data);
   }
 
+  storeOrders(data , List<ProductModel> products)
+  {
+    var docsRef = fireStore.collection(kOrders).doc();
+    docsRef.set(data);
+    for (var product in products) {
+      docsRef.collection(kOrdersDetails).doc().set({
+        kProductName: product.name,
+        kProductPrice: product.price,
+        kProductLocation: product.location,
+        kQuantity: product.kQuantity,
+      });
+    }
+  }
+
   // Stream<QuerySnapshot> loadProduct() {
   //   return FirebaseFirestore.instance
   //       .collection(kProductCollection)

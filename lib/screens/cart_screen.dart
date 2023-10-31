@@ -1,7 +1,9 @@
 import 'package:e_commerce/constants.dart';
+import 'package:e_commerce/helper/show_snack_bar.dart';
 import 'package:e_commerce/models/product_model.dart';
 import 'package:e_commerce/provider/cart_item.dart';
 import 'package:e_commerce/screens/product_info.dart';
+import 'package:e_commerce/services/store.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,6 +20,7 @@ class CartScreen extends StatelessWidget {
     final double statusBarHeight = MediaQuery.of(context).padding.top;
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: const Text(
             'My Cart',
@@ -138,7 +141,7 @@ class CartScreen extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                showCutomDialod(products , context);
+                showCutomDialod(products, context);
               },
               child: Padding(
                 padding:
@@ -196,22 +199,50 @@ class CartScreen extends StatelessWidget {
       ],
     );
   }
-  void showCutomDialod(products , context) async
-  {
-    var price = getTotalPrice(products); 
+
+  void showCutomDialod(products, context) async {
+    var price = getTotalPrice(products);
+    dynamic address;
     AlertDialog alertDialog = AlertDialog(
+      actions: [
+        MaterialButton(onPressed: (){
+          try{
+             Store store = Store();
+             store.storeOrders({
+              kTotalPrice: price,
+              kAdress : address
+             }, products);
+             Navigator.pop(context);
+             showSnackBar(context, 'Order successfully');
+          }
+          catch (e)
+          {
+              debugPrint(e.toString());
+          }
+        } ,child: const Text('Confirm'),),
+      ],
+      content:  TextField(
+        onChanged: (value) {
+          address = value;
+        },
+        decoration:const InputDecoration(
+          hintText: 'Enter your adress',
+        ),
+      ),
       title: Text('Total price = $price'),
     );
-    await showDialog(context: context, builder: (context){
-      return alertDialog;
-    });
+    await showDialog(
+        context: context,
+        builder: (context) {
+          return alertDialog;
+        },);
   }
-  getTotalPrice(List<ProductModel> products)
-  {
-     var price = 0;
-     for (var element in products) {
-       price += element.kQuantity! * int.parse(element.price);
-     }
-     return price;
+
+  getTotalPrice(List<ProductModel> products) {
+    var price = 0;
+    for (var element in products) {
+      price += element.kQuantity! * int.parse(element.price);
+    }
+    return price;
   }
 }
