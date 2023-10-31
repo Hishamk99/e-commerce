@@ -1,6 +1,7 @@
 import 'package:e_commerce/constants.dart';
 import 'package:e_commerce/screens/add_product.dart';
 import 'package:e_commerce/screens/mange_product.dart';
+import 'package:e_commerce/screens/view_order_screen.dart';
 import 'package:flutter/material.dart';
 
 class AdminScreen extends StatelessWidget {
@@ -11,7 +12,14 @@ class AdminScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Admin Screen'),
+          title: const Text(
+            'Admin Screen',
+            style: TextStyle(
+              color: Colors.black,
+            ),
+          ),
+          centerTitle: true,
+          backgroundColor: kTextFieldColor,
         ),
         backgroundColor: kMainColor,
         body: Column(
@@ -39,7 +47,9 @@ class AdminScreen extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 15,),
+            const SizedBox(
+              height: 15,
+            ),
             GestureDetector(
               onTap: () {
                 Navigator.pushNamed(context, ManageProducts.id);
@@ -58,9 +68,13 @@ class AdminScreen extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 15,),
+            const SizedBox(
+              height: 15,
+            ),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, ViewOrderScreen.id);
+              },
               child: Container(
                 width: 120,
                 height: 40,

@@ -127,10 +127,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, CartScreen.id);
-                      },
-                      child: const Icon(Icons.shopping_cart)),
+                    onTap: () {
+                      Navigator.pushNamed(context, CartScreen.id);
+                    },
+                    child: const Icon(Icons.shopping_cart),
+                  ),
                 ],
               ),
             ),

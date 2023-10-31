@@ -147,19 +147,20 @@ class CartScreen extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 child: Container(
-                    width: widthtScreen,
-                    height: heightScreen * .09,
-                    decoration: BoxDecoration(
-                      color: kMainColor,
-                      borderRadius: BorderRadius.circular(16),
+                  width: widthtScreen,
+                  height: heightScreen * .09,
+                  decoration: BoxDecoration(
+                    color: kMainColor,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'ORDER',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
-                    child: const Center(
-                      child: Text(
-                        'ORDER',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                    )),
+                  ),
+                ),
               ),
             ),
           ],
@@ -205,37 +206,42 @@ class CartScreen extends StatelessWidget {
     dynamic address;
     AlertDialog alertDialog = AlertDialog(
       actions: [
-        MaterialButton(onPressed: (){
-          try{
-             Store store = Store();
-             store.storeOrders({
-              kTotalPrice: price,
-              kAdress : address
-             }, products);
-             Navigator.pop(context);
-             showSnackBar(context, 'Order successfully');
-          }
-          catch (e)
-          {
+        MaterialButton(
+          onPressed: () {
+            try {
+              Store store = Store();
+              store.storeOrders(
+                {
+                  kTotalPrice: price,
+                  kAdress: address,
+                },
+                products,
+              );
+              Navigator.pop(context);
+              showSnackBar(context, 'Order successfully');
+            } catch (e) {
               debugPrint(e.toString());
-          }
-        } ,child: const Text('Confirm'),),
+            }
+          },
+          child: const Text('Confirm'),
+        ),
       ],
-      content:  TextField(
+      content: TextField(
         onChanged: (value) {
           address = value;
         },
-        decoration:const InputDecoration(
+        decoration: const InputDecoration(
           hintText: 'Enter your adress',
         ),
       ),
       title: Text('Total price = $price'),
     );
     await showDialog(
-        context: context,
-        builder: (context) {
-          return alertDialog;
-        },);
+      context: context,
+      builder: (context) {
+        return alertDialog;
+      },
+    );
   }
 
   getTotalPrice(List<ProductModel> products) {

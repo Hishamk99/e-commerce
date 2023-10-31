@@ -8,11 +8,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'provider/admin_mode.dart';
 import 'provider/cart_item.dart';
-
 import 'screens/add_product.dart';
 import 'screens/admin_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/mange_product.dart';
+import 'screens/view_order_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,8 +46,9 @@ class EcommerceApp extends StatelessWidget {
           HomeScreen.id: (context) => const HomeScreen(),
           ProductInfoPage.id: (context) => const ProductInfoPage(),
           CartScreen.id: (context) => const CartScreen(),
+          ViewOrderScreen.id: (context) => const ViewOrderScreen(),
         },
-        initialRoute: HomeScreen.id,
+        initialRoute: AdminScreen.id,
       ),
     );
   }
