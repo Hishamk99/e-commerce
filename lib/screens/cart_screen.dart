@@ -137,7 +137,9 @@ class CartScreen extends StatelessWidget {
               },
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                showCutomDialod(products , context);
+              },
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -163,35 +165,53 @@ class CartScreen extends StatelessWidget {
     );
   }
 
-  Future<void> showCutomMenu(TapUpDetails details, BuildContext context,
-      ProductModel product) async {
+  Future<void> showCutomMenu(
+      TapUpDetails details, BuildContext context, ProductModel product) async {
     double dx = details.globalPosition.dx;
     double dy = details.globalPosition.dy;
     double dx1 = MediaQuery.of(context).size.width - dx;
     double dy1 = MediaQuery.of(context).size.width - dy;
     await showMenu(
-        context: context,
-        position: RelativeRect.fromLTRB(dx, dy, dx1, dy1),
-        items: [
-          PopupMenuItem(
-            onTap: () async {
-              final navigator = Navigator.of(context);
-              Provider.of<CartItem>(context, listen: false)
-                  .deleteProduct(product);
-              await Future.delayed(Duration.zero);
+      context: context,
+      position: RelativeRect.fromLTRB(dx, dy, dx1, dy1),
+      items: [
+        PopupMenuItem(
+          onTap: () async {
+            final navigator = Navigator.of(context);
+            Provider.of<CartItem>(context, listen: false)
+                .deleteProduct(product);
+            await Future.delayed(Duration.zero);
 
-              navigator.pushNamed(ProductInfoPage.id,
-                  arguments: product);
-            },
-            child: const Text('Edit'),
-          ),
-          PopupMenuItem(
-            onTap: () {
-              Provider.of<CartItem>(context, listen: false)
-                  .deleteProduct(product);
-            },
-            child: const Text('Delete'),
-          ),
-        ]);
+            navigator.pushNamed(ProductInfoPage.id, arguments: product);
+          },
+          child: const Text('Edit'),
+        ),
+        PopupMenuItem(
+          onTap: () {
+            Provider.of<CartItem>(context, listen: false)
+                .deleteProduct(product);
+          },
+          child: const Text('Delete'),
+        ),
+      ],
+    );
+  }
+  void showCutomDialod(products , context) async
+  {
+    var price = getTotalPrice(products); 
+    AlertDialog alertDialog = AlertDialog(
+      title: Text('Total price = $price'),
+    );
+    await showDialog(context: context, builder: (context){
+      return alertDialog;
+    });
+  }
+  getTotalPrice(List<ProductModel> products)
+  {
+     var price = 0;
+     for (var element in products) {
+       price += element.kQuantity! * int.parse(element.price);
+     }
+     return price;
   }
 }
