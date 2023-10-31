@@ -10,4 +10,9 @@ class CartItem extends ChangeNotifier
     products.add(product);
     notifyListeners();
   }
+  deleteProduct(ProductModel product)
+  {
+    products.remove(product);
+    notifyListeners();
+  }
 }

@@ -176,8 +176,19 @@ class _ProductInfoState extends State<ProductInfoPage> {
   void addToCart(BuildContext context, ProductModel product) {
     CartItem cartItem = Provider.of<CartItem>(context, listen: false);
     product.kQuantity = quantity;
-    cartItem.addProduct(product);
-    showSnackBar(context, 'Added to Cart');
+    bool found = false;
+    var productInCart = cartItem.products;
+    for (var element in productInCart) {
+      if (element == product) {
+        found = true;
+      }
+    }
+    if (found) {
+      showSnackBar(context, 'You Added this Item Before');
+    } else {
+      cartItem.addProduct(product);
+      showSnackBar(context, 'Added to Cart');
+    }
   }
 
   void subtract() {
