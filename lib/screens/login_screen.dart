@@ -2,6 +2,7 @@ import 'package:e_commerce/constants.dart';
 import 'package:e_commerce/helper/show_snack_bar.dart';
 import 'package:e_commerce/provider/admin_mode.dart';
 import 'package:e_commerce/screens/admin_screen.dart';
+import 'package:e_commerce/screens/home_screen.dart';
 import 'package:e_commerce/screens/signup_screen.dart';
 import 'package:e_commerce/services/auth.dart';
 import 'package:e_commerce/widgets/logo.dart';
@@ -219,10 +220,11 @@ class _LoginScreenState extends State<LoginScreen> {
         }
       } else {
         try {
-          print(isAdmin);
+          debugPrint(isAdmin.toString());
           debugPrint(email);
           debugPrint(password);
           await auth.signIn(email!, password!);
+          Navigator.pushNamed(context, HomeScreen.id);
           showSnackBar(context, 'success');
         } on FirebaseAuthException catch (e) {
           if (e.code == 'user-not-found') {
