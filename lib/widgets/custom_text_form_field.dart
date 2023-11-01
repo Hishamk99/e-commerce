@@ -39,7 +39,7 @@ class CustomTextField extends StatelessWidget {
         hintText: hint,
         prefixIcon: icon,
         filled: true,
-        fillColor: kTextFieldColor,
+        fillColor: kSecondryColor,
         enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
             borderSide: const BorderSide(color: Colors.white)),

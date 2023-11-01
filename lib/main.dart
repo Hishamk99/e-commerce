@@ -12,6 +12,7 @@ import 'screens/add_product.dart';
 import 'screens/admin_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/mange_product.dart';
+import 'screens/order_details_screen.dart';
 import 'screens/view_order_screen.dart';
 
 void main() async {
@@ -47,6 +48,7 @@ class EcommerceApp extends StatelessWidget {
           ProductInfoPage.id: (context) => const ProductInfoPage(),
           CartScreen.id: (context) => const CartScreen(),
           ViewOrderScreen.id: (context) => const ViewOrderScreen(),
+          OrdetDetailsScreen.id: (context) => const OrdetDetailsScreen(),
         },
         initialRoute: AdminScreen.id,
       ),

@@ -87,7 +87,7 @@ class _ManageProductsState extends State<ManageProducts> {
                           children: [
                             Positioned.fill(
                               child: Image.asset(
-                                productList[index].location,
+                                productList[index].location!,
                                 fit: BoxFit.fill,
                               ),
                             ),

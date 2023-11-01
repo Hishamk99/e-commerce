@@ -28,7 +28,7 @@ class _ProductInfoState extends State<ProductInfoPage> {
             width: MediaQuery.of(context).size.width,
             child: Image(
               fit: BoxFit.fill,
-              image: AssetImage(product.location),
+              image: AssetImage(product.location!),
             ),
           ),
           Padding(
@@ -82,7 +82,7 @@ class _ProductInfoState extends State<ProductInfoPage> {
                             height: 10,
                           ),
                           Text(
-                            product.desc,
+                            product.desc!,
                             style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w800,

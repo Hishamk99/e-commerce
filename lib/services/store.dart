@@ -36,6 +36,7 @@ class Store {
         kProductPrice: product.price,
         kProductLocation: product.location,
         kQuantity: product.kQuantity,
+        kProductCategory :product.category
       });
     }
   }

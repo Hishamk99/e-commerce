@@ -56,13 +56,13 @@ class CartScreen extends StatelessWidget {
                             },
                             child: Container(
                               height: heightScreen * .15,
-                              color: kTextFieldColor,
+                              color: kSecondryColor,
                               child: Row(
                                 children: [
                                   CircleAvatar(
                                     radius: heightScreen * .15 / 2,
                                     backgroundImage:
-                                        AssetImage(products[index].location),
+                                        AssetImage(products[index].location!),
                                   ),
                                   Expanded(
                                     child: Row(
@@ -247,7 +247,7 @@ class CartScreen extends StatelessWidget {
   getTotalPrice(List<ProductModel> products) {
     var price = 0;
     for (var element in products) {
-      price += element.kQuantity! * int.parse(element.price);
+      price += element.kQuantity! * int.parse(element.price!);
     }
     return price;
   }

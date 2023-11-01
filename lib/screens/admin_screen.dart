@@ -19,7 +19,7 @@ class AdminScreen extends StatelessWidget {
             ),
           ),
           centerTitle: true,
-          backgroundColor: kTextFieldColor,
+          backgroundColor: kSecondryColor,
         ),
         backgroundColor: kMainColor,
         body: Column(

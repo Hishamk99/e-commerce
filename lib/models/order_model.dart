@@ -2,5 +2,6 @@ class OrderModel
 {
   final int totalPrice;
   final String address;
-  OrderModel({required this.address ,required this.totalPrice});
+  final String docId;
+  OrderModel( {required this.docId ,required this.address ,required this.totalPrice});
 }

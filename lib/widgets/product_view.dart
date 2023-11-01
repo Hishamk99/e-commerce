@@ -48,7 +48,7 @@ Widget productView(String pCategory, List<ProductModel> kProducts) {
                     children: [
                       Positioned.fill(
                         child: Image.asset(
-                          productList[index].location,
+                          productList[index].location!,
                           fit: BoxFit.fill,
                         ),
                       ),
