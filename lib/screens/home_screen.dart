@@ -1,9 +1,11 @@
 import 'package:e_commerce/constants.dart';
 import 'package:e_commerce/models/product_model.dart';
 import 'package:e_commerce/screens/cart_screen.dart';
+import 'package:e_commerce/screens/login_screen.dart';
 import 'package:e_commerce/services/auth.dart';
 import 'package:e_commerce/widgets/product_view.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -34,7 +36,14 @@ class _HomeScreenState extends State<HomeScreen> {
               currentIndex: bottomBarIndex,
               fixedColor: kMainColor,
               type: BottomNavigationBarType.fixed,
-              onTap: (value) {
+              onTap: (value) async{
+                if(value == 2)
+                {
+                  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+                  sharedPreferences.clear();
+                  await auth.signOut();
+                  Navigator.popAndPushNamed(context , LoginScreen.id);
+                }
                 setState(() {
                   bottomBarIndex = value;
                 });
@@ -42,20 +51,16 @@ class _HomeScreenState extends State<HomeScreen> {
               items: const [
                 BottomNavigationBarItem(
                   //backgroundColor:kMainColor,
-                  label: 'dsds',
+                  label: 'test',
                   icon: Icon(Icons.person),
                 ),
                 BottomNavigationBarItem(
-                  label: 'dsds',
+                  label: 'test',
                   icon: Icon(Icons.person),
                 ),
                 BottomNavigationBarItem(
-                  label: 'dsds',
-                  icon: Icon(Icons.person),
-                ),
-                BottomNavigationBarItem(
-                  label: 'dsds',
-                  icon: Icon(Icons.person),
+                  label: 'Sign Out',
+                  icon: Icon(Icons.close),
                 ),
               ],
             ),
