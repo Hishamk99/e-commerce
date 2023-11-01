@@ -10,6 +10,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -26,6 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final auth = Auth();
   bool isLoading = false;
   bool isAdmin = false;
+  bool keepMeLoggedIn = false;
   final adminPass = 'admin12345';
 
   @override
@@ -56,8 +58,25 @@ class _LoginScreenState extends State<LoginScreen> {
                     hint: 'Enter your Email',
                     icon: const Icon(Icons.email),
                   ),
-                  SizedBox(
-                    height: height * .02,
+                  Row(
+                    children: [
+                      Checkbox(
+                        checkColor: kMainColor,
+                        activeColor: Colors.green,
+                        value: keepMeLoggedIn,
+                        onChanged: (value) {
+                          setState(() {
+                            keepMeLoggedIn = value!;
+                          });
+                        },
+                      ),
+                      const Text(
+                        'Remember Me',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
                   ),
                   CustomTextField(
                     onSaved: (data) {
@@ -71,6 +90,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   GestureDetector(
                     onTap: () {
+                      if(keepMeLoggedIn)
+                      {
+                        keepUserLoggedIn();
+                      }
                       _validate(context);
                     },
                     child: Container(
@@ -151,12 +174,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: Text(
                               'I\'m a user',
                               style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Provider.of<AdminMode>(context).isAdmin
-                                    ? Colors.white
-                                    : kMainColor
-                              ),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Provider.of<AdminMode>(context).isAdmin
+                                      ? Colors.white
+                                      : kMainColor),
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -178,20 +200,20 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() {});
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
-      if (Provider.of<AdminMode>(context , listen: false).isAdmin) {
+      if (Provider.of<AdminMode>(context, listen: false).isAdmin) {
         if (password == adminPass) {
           try {
-          await auth.signIn(email!.trim(), password!.trim());
-          Navigator.pushNamed(context, AdminScreen.id);
-        } on FirebaseAuthException catch (e) {
-          if (e.code == 'user-not-found') {
-            showSnackBar(context, 'no user found for tha email');
-          } else if (e.code == 'wrong-password') {
-            showSnackBar(context, 'wrong password provided for that user');
+            await auth.signIn(email!.trim(), password!.trim());
+            Navigator.pushNamed(context, AdminScreen.id);
+          } on FirebaseAuthException catch (e) {
+            if (e.code == 'user-not-found') {
+              showSnackBar(context, 'no user found for tha email');
+            } else if (e.code == 'wrong-password') {
+              showSnackBar(context, 'wrong password provided for that user');
+            }
+          } catch (e) {
+            debugPrint(e.toString());
           }
-        } catch (e) {
-          debugPrint(e.toString());
-        }
         } else {
           showSnackBar(context, 'something went wrong');
         }
@@ -207,12 +229,18 @@ class _LoginScreenState extends State<LoginScreen> {
             showSnackBar(context, 'no user found for tha email');
           } else if (e.code == 'wrong-password') {
             showSnackBar(context, 'wrong password provided for that user');
+          } else {
+            showSnackBar(context, 'error');
           }
-          else{showSnackBar(context, 'error');}
         }
       }
     }
     isLoading = false;
     setState(() {});
+  }
+  
+  void keepUserLoggedIn()async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setBool(kKeepMeLoggedIn, keepMeLoggedIn);
   }
 }

@@ -35,7 +35,7 @@ class OrdetDetailsScreen extends StatelessWidget {
                 orders.add(
                   ProductModel(
                     name: doc[kProductName] ?? '',
-                    //category: doc[kProductCategory] ?? '',
+                    category: doc[kProductCategory] ?? '',
                     kQuantity: doc[kQuantity] ?? '',
                   ),
                 );
@@ -67,16 +67,16 @@ class OrdetDetailsScreen extends StatelessWidget {
                                   const SizedBox(
                                     height: 15,
                                   ),
-                                  // Text(
-                                  //   'Product Category ${orders[index].category}',
-                                  //   style: const TextStyle(
-                                  //     fontWeight: FontWeight.bold,
-                                  //     fontSize: 16,
-                                  //   ),
-                                  // ),
-                                  // const SizedBox(
-                                  //   height: 15,
-                                  // ),
+                                  Text(
+                                    'Product Category is ${orders[index].category}',
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
                                   Text(
                                     'Product Quantity ${orders[index].kQuantity}',
                                     style: const TextStyle(

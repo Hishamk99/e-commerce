@@ -18,3 +18,4 @@ const kOrders = 'orders';
 const kOrdersDetails = 'ordersDetails';
 const kTotalPrice = 'totalPrice';
 const kAdress = 'adress';
+const kKeepMeLoggedIn = 'KeepMeLoggedIn';

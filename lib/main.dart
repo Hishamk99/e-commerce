@@ -50,7 +50,7 @@ class EcommerceApp extends StatelessWidget {
           ViewOrderScreen.id: (context) => const ViewOrderScreen(),
           OrdetDetailsScreen.id: (context) => const OrdetDetailsScreen(),
         },
-        initialRoute: AdminScreen.id,
+        initialRoute: LoginScreen.id,
       ),
     );
   }
